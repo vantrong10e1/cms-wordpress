@@ -2,7 +2,18 @@
 /**
  * MODULE (9) - CATEGORIES (PHONG CÁCH KHOA CNTT - TDC / FIT TDC)
  * Đặc trưng: Tiêu đề có gạch sọc pattern mờ, danh sách bullet tròn màu vàng, link xanh gạch chân khi hover
+ * TÍCH HỢP SQL TRỰC TIẾP QUA $wpdb
  */
+global $wpdb;
+
+// Câu truy vấn SQL trực tiếp lấy danh sách chuyên mục
+$categories = $wpdb->get_results("
+    SELECT t.term_id, t.name, t.slug
+    FROM {$wpdb->terms} t
+    INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
+    WHERE tt.taxonomy = 'category'
+    ORDER BY t.name ASC
+");
 ?>
 <section class="widget tdc-fit-categories-widget">
     <div class="tdc-fit-categories-box">
@@ -10,12 +21,6 @@
         <div class="tdc-fit-title-stripe"></div>
         <ul class="tdc-fit-categories-list">
             <?php
-            $categories = get_categories(array(
-                'orderby'    => 'name',
-                'order'      => 'ASC',
-                'hide_empty' => false,
-            ));
-
             if (!empty($categories)) :
                 foreach ($categories as $cat) :
                     $cat_link = esc_url(get_category_link($cat->term_id));
