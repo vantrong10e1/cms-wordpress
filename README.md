@@ -1,2 +1,0 @@
-# cms-wordpress
-WordPress CMS 
