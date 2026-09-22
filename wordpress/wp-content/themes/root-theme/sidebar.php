@@ -111,10 +111,65 @@
 
     <!-- MODULE (11): ARCHIVE / XEM NHIỀU 2 CỘT PHONG CÁCH VNEXPRESS -->
     <?php
-    if (file_exists(get_template_directory() . '/modules/module-11-archive.php')) {
-        include get_template_directory() . '/modules/module-11-archive.php';
-    }
+    $tdc_popular_posts = new WP_Query(array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => 8,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ));
     ?>
+
+    <section class="tdc-module-11">
+
+        <div class="tdc-module-11-header">
+            <h3 class="tdc-module-11-title">Xem nhiều</h3>
+            <span class="tdc-module-11-menu">&#8942;</span>
+        </div>
+
+        <?php if ($tdc_popular_posts->have_posts()) : ?>
+
+            <div class="tdc-module-11-list">
+
+                <?php
+                $tdc_popular_number = 1;
+
+                while ($tdc_popular_posts->have_posts()) :
+                    $tdc_popular_posts->the_post();
+                ?>
+
+                    <article class="tdc-module-11-item">
+
+                        <div class="tdc-module-11-number">
+                            <?php echo esc_html($tdc_popular_number); ?>
+                        </div>
+
+                        <div class="tdc-module-11-content">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php the_title(); ?>
+                            </a>
+                        </div>
+
+                    </article>
+
+                <?php
+                    $tdc_popular_number++;
+                endwhile;
+                ?>
+
+            </div>
+
+        <?php else : ?>
+
+            <div class="tdc-module-11-empty">
+                Chưa có bài viết nào.
+            </div>
+
+        <?php endif; ?>
+
+    </section>
+
+    <?php wp_reset_postdata(); ?>
 
     <!-- DYNAMIC SIDEBAR (Nếu có widget được kéo thả thêm trong wp-admin) -->
     <?php if (is_active_sidebar('sidebar-1')) : ?>
