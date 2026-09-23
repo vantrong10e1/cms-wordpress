@@ -223,7 +223,9 @@
                     </nav>
 
                 <?php endif; ?>
-                
+
+                <?php root_theme_render_post_reactions(get_the_ID()); ?>
+
                     <!-- =====================================
                         COMMENTS
                     ====================================== -->
