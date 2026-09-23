@@ -1,7 +1,7 @@
 <?php
 /**
  * Template for Search Page (Module 4: Search Form & Module 5: Search Results)
- * Theme: Root Theme
+ * Theme: Root Theme - Module 5: Search Results (FIT TDC Style)
  */
 get_header();
 ?>
