@@ -20,252 +20,6 @@ function group_c_enqueue_styles() {
 }
 add_action('wp_enqueue_scripts', 'group_c_enqueue_styles');
 
-// Module 13: CSS được khai báo trong PHP theo yêu cầu không sửa style.css.
-function root_theme_enqueue_module_13_styles() {
-    $module_13_css = <<<'CSS'
-.tdc-module-13 {
-    width: min(100% - 40px, 1200px);
-    margin: 0 auto 42px;
-}
-.tdc-module-13__heading {
-    margin: 0 0 20px;
-    color: #1f2937;
-    font-size: 24px;
-    font-weight: 700;
-}
-.tdc-module-13__grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 22px;
-}
-.tdc-module-13__card {
-    min-width: 0;
-    overflow: hidden;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, .06);
-}
-.tdc-module-13__image-link,
-.tdc-module-13__placeholder {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: #dcebf5;
-}
-.tdc-module-13__image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .25s ease;
-}
-.tdc-module-13__image-link:hover .tdc-module-13__image {
-    transform: scale(1.035);
-}
-.tdc-module-13__placeholder {
-    background: linear-gradient(135deg, #dbeafe, #e2e8f0);
-}
-.tdc-module-13__body {
-    padding: 16px 18px 18px;
-}
-.tdc-module-13__title {
-    margin: 0 0 10px;
-    font-size: 17px;
-    line-height: 1.4;
-}
-.tdc-module-13__title a {
-    color: #4b6f88;
-    text-decoration: none;
-}
-.tdc-module-13__title a:hover {
-    color: #1681c4;
-    text-decoration: underline;
-}
-.tdc-module-13__excerpt {
-    margin: 0;
-    color: #64748b;
-    font-size: 14px;
-    line-height: 1.6;
-}
-@media (max-width: 768px) {
-    .tdc-module-13 {
-        width: min(100% - 28px, 1200px);
-    }
-    .tdc-module-13__grid {
-        grid-template-columns: 1fr;
-    }
-}
-CSS;
-
-    wp_add_inline_style('group-c-style', $module_13_css);
-}
-add_action('wp_enqueue_scripts', 'root_theme_enqueue_module_13_styles', 20);
-
-function root_theme_get_module_13_image_url($post_id, $post_content = '') {
-    $featured_image_url = get_the_post_thumbnail_url($post_id, 'medium_large');
-
-    if ($featured_image_url) {
-        return $featured_image_url;
-    }
-
-    if (!preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $post_content, $matches)) {
-        return '';
-    }
-
-    $content_image_url = html_entity_decode($matches[1], ENT_QUOTES, 'UTF-8');
-    $uploads_marker = '/wp-content/uploads/';
-    $uploads_position = strpos($content_image_url, $uploads_marker);
-
-    if ($uploads_position !== false) {
-        $uploads_path = substr($content_image_url, $uploads_position + strlen('/wp-content'));
-        return content_url($uploads_path);
-    }
-
-    if (strpos($content_image_url, '//') === 0) {
-        return (is_ssl() ? 'https:' : 'http:') . $content_image_url;
-    }
-
-    if (strpos($content_image_url, '/') === 0) {
-        return home_url($content_image_url);
-    }
-
-    return $content_image_url;
-}
-
-// Module đề xuất: thời gian đọc và thanh tiến trình đọc bài.
-function root_theme_get_reading_time($content) {
-    $plain_text = trim(wp_strip_all_tags(strip_shortcodes($content)));
-
-    if ($plain_text === '') {
-        return 1;
-    }
-
-    $words = preg_split('/\s+/u', $plain_text, -1, PREG_SPLIT_NO_EMPTY);
-    return max(1, (int) ceil(count($words) / 200));
-}
-
-function root_theme_enqueue_reading_progress_styles() {
-    if (!is_single()) {
-        return;
-    }
-
-    $reading_progress_css = <<<'CSS'
-.tdc-reading-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99999;
-    width: 100%;
-    height: 4px;
-    background: rgba(226, 232, 240, .9);
-    pointer-events: none;
-}
-.tdc-reading-progress__bar {
-    display: block;
-    width: 0;
-    height: 100%;
-    background: linear-gradient(90deg, #06b6d4, #2563eb);
-    box-shadow: 0 1px 5px rgba(37, 99, 235, .35);
-    transition: width .08s linear;
-}
-.admin-bar .tdc-reading-progress {
-    top: 32px;
-}
-.tdc-single-heading-content {
-    flex: 1 1 auto;
-    min-width: 0;
-    padding-right: 32px;
-}
-.tdc-single-heading-content .single-post-title {
-    padding-right: 0;
-}
-.tdc-reading-meta {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    width: max-content;
-    max-width: 100%;
-    margin-top: 12px;
-    color: #64748b;
-    font-size: 14px;
-    line-height: 1.4;
-    white-space: nowrap;
-}
-.tdc-reading-meta__icon {
-    flex: 0 0 18px;
-    width: 18px;
-    height: 18px;
-    color: #1681c4;
-}
-.tdc-reading-meta span {
-    white-space: nowrap;
-}
-@media screen and (max-width: 782px) {
-    .admin-bar .tdc-reading-progress {
-        top: 46px;
-    }
-}
-@media (max-width: 600px) {
-    .tdc-single-heading-content {
-        padding-right: 18px;
-    }
-    .tdc-reading-meta {
-        max-width: 100%;
-        font-size: 13px;
-    }
-}
-CSS;
-
-    wp_add_inline_style('group-c-style', $reading_progress_css);
-}
-add_action('wp_enqueue_scripts', 'root_theme_enqueue_reading_progress_styles', 30);
-
-function root_theme_render_reading_progress_script() {
-    if (!is_single()) {
-        return;
-    }
-    ?>
-    <script>
-    (function () {
-        'use strict';
-
-        var content = document.querySelector('.single-post-content');
-        var progressBar = document.querySelector('.tdc-reading-progress__bar');
-        var ticking = false;
-
-        if (!content || !progressBar) {
-            return;
-        }
-
-        function updateReadingProgress() {
-            var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-            var contentTop = content.getBoundingClientRect().top + window.pageYOffset;
-            var contentHeight = content.offsetHeight;
-            var readableDistance = Math.max(contentHeight - viewportHeight, 1);
-            var currentDistance = window.pageYOffset - contentTop;
-            var percentage = Math.min(100, Math.max(0, (currentDistance / readableDistance) * 100));
-
-            progressBar.style.width = percentage.toFixed(2) + '%';
-            ticking = false;
-        }
-
-        function requestProgressUpdate() {
-            if (!ticking) {
-                window.requestAnimationFrame(updateReadingProgress);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', requestProgressUpdate, { passive: true });
-        window.addEventListener('resize', requestProgressUpdate);
-        updateReadingProgress();
-    }());
-    </script>
-    <?php
-}
-add_action('wp_footer', 'root_theme_render_reading_progress_script', 30);
-
 
 // 2. Đăng ký khu vực Sidebar & Footer Widgets
 function root_theme_widgets_init() {
@@ -278,90 +32,9 @@ function root_theme_widgets_init() {
         'before_title'  => '<h2 class="widget-title">',
         'after_title'   => '</h2>',
     ));
-    register_sidebar(array(
-        'name'          => 'Widget Test 4',
-        'id'            => 'widget_test_4',
-        'description'   => 'Widget hiển thị 5 bài viết mới nhất phía trên Footer',
-        'before_widget' => '<section id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</section>',
-        'before_title'  => '<h2 class="widget-title">',
-        'after_title'   => '</h2>',
-    ));
 }
 add_action('widgets_init', 'root_theme_widgets_init');
 
-// 4. Widget Test 4 - 5 bài viết mới nhất
-class Root_Theme_Widget_Test_4 extends WP_Widget {
-
-    public function __construct() {
-        parent::__construct(
-            'root_theme_widget_test_4',
-            'Widget Test 4',
-            array(
-                'description' => 'Hiển thị 5 bài viết mới nhất.',
-            )
-        );
-    }
-
-    public function widget($args, $instance) {
-        $posts = new WP_Query(array(
-            'post_type'      => 'post',
-            'post_status'    => 'publish',
-            'posts_per_page' => 5,
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-        ));
-
-        if (!$posts->have_posts()) {
-            return;
-        }
-
-        echo $args['before_widget'];
-        ?>
-
-        <div class="widget-test-4">
-            <?php while ($posts->have_posts()) : $posts->the_post(); ?>
-
-                <article class="widget-test-4-item">
-
-                    <a
-                        class="widget-test-4-link"
-                        href="<?php the_permalink(); ?>"
-                    >
-                        <span class="widget-test-4-title">
-                            <?php the_title(); ?>
-                        </span>
-
-                        <span class="widget-test-4-comments">
-                            <span class="comment-icon"></span>
-                            <?php echo get_comments_number(); ?>
-                        </span>
-
-                        <span class="widget-test-4-arrow"></span>
-                    </a>
-
-                </article>
-
-            <?php endwhile; ?>
-        </div>
-
-        <div class="widget-test-4-more">
-            <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>">
-                Xem thêm
-            </a>
-        </div>
-
-        <?php
-        echo $args['after_widget'];
-
-        wp_reset_postdata();
-    }
-}
-
-function root_theme_register_widget_test_4() {
-    register_widget('Root_Theme_Widget_Test_4');
-}
-add_action('widgets_init', 'root_theme_register_widget_test_4');
 
 // 3. Đăng ký các Shortcodes cho 4 Modules
 if (!shortcode_exists('tdc_categories')) {
@@ -398,6 +71,28 @@ if (!shortcode_exists('tdc_vnexpress_archive')) {
         ob_start();
         if (file_exists(get_template_directory() . '/modules/module-11-archive.php')) {
             include get_template_directory() . '/modules/module-11-archive.php';
+        }
+        return ob_get_clean();
+    });
+}
+
+// Module 12 (Tự chọn 1): Tiêu Điểm Thể Thao & Highlights
+if (!shortcode_exists('tdc_featured_sports')) {
+    add_shortcode('tdc_featured_sports', function($atts) {
+        ob_start();
+        if (file_exists(get_template_directory() . '/modules/module-12-featured-sports.php')) {
+            include get_template_directory() . '/modules/module-12-featured-sports.php';
+        }
+        return ob_get_clean();
+    });
+}
+
+// Module 13 (Tự chọn 2): Lịch Thi Đấu & Kết Quả Thể Thao
+if (!shortcode_exists('tdc_sports_fixtures')) {
+    add_shortcode('tdc_sports_fixtures', function($atts) {
+        ob_start();
+        if (file_exists(get_template_directory() . '/modules/module-13-fixtures.php')) {
+            include get_template_directory() . '/modules/module-13-fixtures.php';
         }
         return ob_get_clean();
     });
