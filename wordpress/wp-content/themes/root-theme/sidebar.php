@@ -52,11 +52,6 @@
     ?>
 
     <section class="tdc-module-10">
-
-        <div class="tdc-module-10-header">
-            <span class="tdc-module-10-menu">&#8942;</span>
-        </div>
-
         <?php if ($tdc_recent_posts->have_posts()) : ?>
 
             <div class="tdc-module-10-list">
