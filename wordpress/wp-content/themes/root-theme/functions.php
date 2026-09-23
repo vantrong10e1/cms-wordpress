@@ -20,6 +20,128 @@ function group_c_enqueue_styles() {
 }
 add_action('wp_enqueue_scripts', 'group_c_enqueue_styles');
 
+// Module 14: giao diện danh sách bình luận và phản hồi phân cấp.
+function root_theme_enqueue_module_14_styles() {
+    if (!is_single()) {
+        return;
+    }
+
+    $module_14_css = <<<'CSS'
+.tdc-module-14 {
+    margin-top: 34px;
+}
+.tdc-module-14__title {
+    margin: 0 0 18px;
+    color: #27364a;
+    font-size: 22px;
+    font-weight: 700;
+}
+.tdc-module-14-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.tdc-module-14-comment {
+    margin: 0 0 12px;
+}
+.tdc-module-14-comment__row {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+}
+.tdc-module-14-comment__avatar img {
+    display: block;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #e2e5e9;
+    background: #f1f3f5;
+    object-fit: cover;
+}
+.tdc-module-14-comment__card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #dfe3e7;
+    background: #fff;
+}
+.tdc-module-14-comment__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 10px;
+    background: #f3f4f5;
+    border-bottom: 1px solid #e3e6e9;
+}
+.tdc-module-14-comment__author {
+    color: #3d5369;
+    font-size: 14px;
+    font-weight: 600;
+}
+.tdc-module-14-comment__date {
+    color: #8290a0;
+    font-size: 11px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.tdc-module-14-comment__date:hover {
+    color: #1681c4;
+    text-decoration: underline;
+}
+.tdc-module-14-comment__date:focus-visible {
+    color: #1681c4;
+    outline: 2px solid #1681c4;
+    outline-offset: 2px;
+}
+.tdc-module-14-comment__content {
+    padding: 9px 10px 10px;
+    color: #56616d;
+    font-size: 13px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+.tdc-module-14-comment__content p {
+    margin: 0 0 8px;
+}
+.tdc-module-14-comment__content p:last-child {
+    margin-bottom: 0;
+}
+.tdc-module-14-list.children {
+    margin: 10px 0 0 32px;
+}
+.tdc-module-14__empty {
+    margin: 0;
+    padding: 14px 16px;
+    border: 1px solid #dfe3e7;
+    background: #f8f9fa;
+    color: #647180;
+    font-size: 13px;
+    line-height: 1.55;
+}
+@media (max-width: 600px) {
+    .tdc-module-14-comment__row {
+        grid-template-columns: 30px minmax(0, 1fr);
+        gap: 8px;
+    }
+    .tdc-module-14-comment__avatar img {
+        width: 30px;
+        height: 30px;
+    }
+    .tdc-module-14-comment__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .tdc-module-14-list.children {
+        margin-left: 16px;
+    }
+}
+CSS;
+
+    wp_add_inline_style('group-c-style', $module_14_css);
+}
+add_action('wp_enqueue_scripts', 'root_theme_enqueue_module_14_styles', 15);
+
 // Module 13: CSS được khai báo trong PHP theo yêu cầu không sửa style.css.
 function root_theme_enqueue_module_13_styles() {
     $module_13_css = <<<'CSS'

@@ -14,14 +14,88 @@ $current_post_id = get_the_ID();
 
 // Truy vấn SQL trực tiếp lấy danh sách các bình luận đã duyệt của bài viết
 $comments_list = $wpdb->get_results($wpdb->prepare("
-    SELECT comment_ID, comment_author, comment_author_email, comment_date, comment_content
+    SELECT comment_ID, comment_parent, comment_author, comment_author_email, comment_date, comment_content
     FROM {$wpdb->comments}
     WHERE comment_post_ID = %d
       AND comment_approved = '1'
-    ORDER BY comment_date ASC
+      AND comment_type IN ('', 'comment')
+    ORDER BY comment_date_gmt ASC, comment_ID ASC
 ", $current_post_id));
 
 $comments_count = count($comments_list);
+
+// Module 14: gom bình luận theo comment_parent để hiển thị đúng cấu trúc phản hồi.
+$approved_comment_ids = array();
+$comments_by_parent = array();
+
+foreach ($comments_list as $comment_item) {
+    $approved_comment_ids[(int) $comment_item->comment_ID] = true;
+}
+
+foreach ($comments_list as $comment_item) {
+    $parent_id = (int) $comment_item->comment_parent;
+
+    // Nếu bình luận cha không còn tồn tại hoặc chưa được duyệt, đưa phản hồi về cấp đầu.
+    if ($parent_id !== 0 && !isset($approved_comment_ids[$parent_id])) {
+        $parent_id = 0;
+    }
+
+    if (!isset($comments_by_parent[$parent_id])) {
+        $comments_by_parent[$parent_id] = array();
+    }
+
+    $comments_by_parent[$parent_id][] = $comment_item;
+}
+
+$render_module_14_comments = function($parent_id = 0) use (&$render_module_14_comments, $comments_by_parent) {
+    if (empty($comments_by_parent[$parent_id])) {
+        return;
+    }
+
+    $list_class = $parent_id === 0
+        ? 'tdc-module-14-list'
+        : 'tdc-module-14-list children';
+    ?>
+    <ol class="<?php echo esc_attr($list_class); ?>">
+        <?php foreach ($comments_by_parent[$parent_id] as $comment_item) : ?>
+            <?php $comment_id = (int) $comment_item->comment_ID; ?>
+            <li class="tdc-module-14-comment" id="comment-<?php echo esc_attr($comment_id); ?>">
+                <article class="tdc-module-14-comment__row">
+                    <div class="tdc-module-14-comment__avatar">
+                        <?php echo get_avatar($comment_item->comment_author_email, 36, '', esc_attr($comment_item->comment_author)); ?>
+                    </div>
+
+                    <div class="tdc-module-14-comment__card">
+                        <header class="tdc-module-14-comment__header">
+                            <strong class="tdc-module-14-comment__author">
+                                <?php echo esc_html($comment_item->comment_author); ?>
+                            </strong>
+                            <a class="tdc-module-14-comment__date" href="<?php echo esc_url(get_comment_link($comment_id)); ?>">
+                                <time datetime="<?php echo esc_attr(mysql2date('c', $comment_item->comment_date)); ?>">
+                                    <?php
+                                    echo esc_html(
+                                        date_i18n(
+                                            get_option('date_format') . ' ' . get_option('time_format'),
+                                            strtotime($comment_item->comment_date)
+                                        )
+                                    );
+                                    ?>
+                                </time>
+                            </a>
+                        </header>
+
+                        <div class="tdc-module-14-comment__content">
+                            <?php echo wpautop(esc_html($comment_item->comment_content)); ?>
+                        </div>
+                    </div>
+                </article>
+
+                <?php $render_module_14_comments($comment_id); ?>
+            </li>
+        <?php endforeach; ?>
+    </ol>
+    <?php
+};
 ?>
 
 <section id="comments" class="comments-area tdc-module-8-container">
@@ -75,39 +149,17 @@ $comments_count = count($comments_list);
         </div>
     </div>
 
-    <!-- DANH SÁCH BÌNH LUẬN TRUY VẤN TỪ SQL ($wpdb) -->
-    <?php if ($comments_count > 0) : ?>
-        <div class="existing-comments tdc-existing-comments">
-            <h3 class="comments-title">
-                <?php echo esc_html($comments_count) . ' Bình luận'; ?>
-            </h3>
+    <!-- MODULE 14: DANH SÁCH BÌNH LUẬN PHÂN CẤP -->
+    <div class="existing-comments tdc-existing-comments tdc-module-14">
+        <h3 class="comments-title tdc-module-14__title">
+            <?php echo esc_html(sprintf(_n('%s Bình luận', '%s Bình luận', $comments_count, 'root-theme'), number_format_i18n($comments_count))); ?>
+        </h3>
 
-            <ol class="comment-list">
-                <?php foreach ($comments_list as $cmt) : ?>
-                    <li class="comment" id="comment-<?php echo esc_attr($cmt->comment_ID); ?>">
-                        <article class="comment-body">
-                            <footer class="comment-meta">
-                                <div class="comment-author vcard">
-                                    <?php echo get_avatar($cmt->comment_author_email, 48); ?>
-                                    <b class="fn"><?php echo esc_html($cmt->comment_author); ?></b>
-                                    <span class="says">viết:</span>
-                                </div>
-                                <div class="comment-metadata">
-                                    <a href="<?php echo esc_url(get_comment_link($cmt->comment_ID)); ?>">
-                                        <time datetime="<?php echo esc_attr($cmt->comment_date); ?>">
-                                            <?php echo esc_html(date_i18n(get_option('date_format') . ' \l\ú\c ' . get_option('time_format'), strtotime($cmt->comment_date))); ?>
-                                        </time>
-                                    </a>
-                                </div>
-                            </footer>
-                            <div class="comment-content">
-                                <?php echo wpautop(esc_html($cmt->comment_content)); ?>
-                            </div>
-                        </article>
-                    </li>
-                <?php endforeach; ?>
-            </ol>
-        </div>
-    <?php endif; ?>
+        <?php if ($comments_count > 0) : ?>
+            <?php $render_module_14_comments(0); ?>
+        <?php else : ?>
+            <p class="tdc-module-14__empty">Chưa có bình luận nào. Hãy là người đầu tiên tham gia thảo luận.</p>
+        <?php endif; ?>
+    </div>
 
 </section>
