@@ -6,6 +6,11 @@
 
         <?php while (have_posts()) : the_post(); ?>
 
+            <!-- MODULE ĐỀ XUẤT: READING PROGRESS -->
+            <div class="tdc-reading-progress" aria-hidden="true">
+                <span class="tdc-reading-progress__bar"></span>
+            </div>
+
             <article class="single-post">
 
                 <!-- =====================================
@@ -14,9 +19,20 @@
 
                 <header class="single-post-header">
 
-                    <h1 class="single-post-title">
-                        <?php the_title(); ?>
-                    </h1>
+                    <div class="tdc-single-heading-content">
+                        <h1 class="single-post-title">
+                            <?php the_title(); ?>
+                        </h1>
+
+                        <?php $reading_time = root_theme_get_reading_time(get_the_content()); ?>
+                        <div class="tdc-reading-meta" aria-label="Thời gian đọc dự kiến">
+                            <svg class="tdc-reading-meta__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                                <path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            <span>Đã đọc được <?php echo esc_html($reading_time); ?> phút</span>
+                        </div>
+                    </div>
 
 
                     <!-- DATE -->
