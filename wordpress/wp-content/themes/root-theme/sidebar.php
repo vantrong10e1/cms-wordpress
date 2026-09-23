@@ -170,7 +170,65 @@
     </section>
 
     <?php wp_reset_postdata(); ?>
+    
+    <!-- MODULE (12): COMMENTS -->
+    <?php
+    $tdc_recent_comments = new WP_Comment_Query();
 
+    $tdc_comments = $tdc_recent_comments->query(array(
+        'status'  => 'approve',
+        'type'    => 'comment',
+        'number'  => 3,
+        'orderby' => 'comment_date',
+        'order'   => 'DESC',
+    ));
+    ?>
+
+    <section class="widget tdc-module-12">
+
+        <div class="tdc-module-12-header">
+            <h3 class="tdc-module-12-title">Comments</h3>
+            <div class="tdc-module-12-stripe"></div>
+        </div>
+
+        <?php if (!empty($tdc_comments)) : ?>
+
+            <div class="tdc-module-12-list">
+
+                <?php foreach ($tdc_comments as $tdc_comment) : ?>
+
+                    <article class="tdc-module-12-item">
+
+                        <a
+                            href="<?php echo esc_url(get_comment_link($tdc_comment->comment_ID)); ?>"
+                            class="tdc-module-12-comment"
+                        >
+                            <?php
+                            echo esc_html(
+                                wp_trim_words(
+                                    $tdc_comment->comment_content,
+                                    12,
+                                    '...'
+                                )
+                            );
+                            ?>
+                        </a>
+
+                    </article>
+
+                <?php endforeach; ?>
+
+            </div>
+
+        <?php else : ?>
+
+            <div class="tdc-module-12-empty">
+                Chưa có bình luận nào.
+            </div>
+
+        <?php endif; ?>
+
+    </section>
     <!-- DYNAMIC SIDEBAR (Nếu có widget được kéo thả thêm trong wp-admin) -->
     <?php if (is_active_sidebar('sidebar-1')) : ?>
         <div class="dynamic-sidebar-widgets">

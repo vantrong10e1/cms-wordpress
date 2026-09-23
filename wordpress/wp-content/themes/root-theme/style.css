@@ -4439,3 +4439,66 @@ footer.site-footer,
     }
 }
 
+/* =========================================================
+   MODULE 12 - COMMENTS
+   ========================================================= */
+
+   .tdc-module-12 {
+    width: 100%;
+    margin-top: 18px;
+    background: #ffffff;
+}
+
+/* Header */
+.tdc-module-12-header {
+    padding: 0 0 10px;
+    border-bottom: none;
+}
+
+.tdc-module-12-title {
+    display: inline-block;
+    margin: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #222222;
+    color: #222222;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+/* Danh sách comment */
+.tdc-module-12-list {
+    width: 100%;
+}
+
+/* Từng comment */
+.tdc-module-12-item {
+    padding: 13px 0;
+    border-bottom: 1px solid #dddddd;
+}
+
+/* Nội dung comment */
+.tdc-module-12-comment {
+    display: block;
+    color: #17a5e1;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tdc-module-12-comment:hover {
+    color: #7bb1b4;
+}
+
+
+/* Không có comment */
+.tdc-module-12-empty {
+    padding: 15px 0;
+    color: #777777;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
