@@ -133,6 +133,139 @@ function root_theme_get_module_13_image_url($post_id, $post_content = '') {
     return $content_image_url;
 }
 
+// Module đề xuất: thời gian đọc và thanh tiến trình đọc bài.
+function root_theme_get_reading_time($content) {
+    $plain_text = trim(wp_strip_all_tags(strip_shortcodes($content)));
+
+    if ($plain_text === '') {
+        return 1;
+    }
+
+    $words = preg_split('/\s+/u', $plain_text, -1, PREG_SPLIT_NO_EMPTY);
+    return max(1, (int) ceil(count($words) / 200));
+}
+
+function root_theme_enqueue_reading_progress_styles() {
+    if (!is_single()) {
+        return;
+    }
+
+    $reading_progress_css = <<<'CSS'
+.tdc-reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 4px;
+    background: rgba(226, 232, 240, .9);
+    pointer-events: none;
+}
+.tdc-reading-progress__bar {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #06b6d4, #2563eb);
+    box-shadow: 0 1px 5px rgba(37, 99, 235, .35);
+    transition: width .08s linear;
+}
+.admin-bar .tdc-reading-progress {
+    top: 32px;
+}
+.tdc-single-heading-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-right: 32px;
+}
+.tdc-single-heading-content .single-post-title {
+    padding-right: 0;
+}
+.tdc-reading-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: max-content;
+    max-width: 100%;
+    margin-top: 12px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+.tdc-reading-meta__icon {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    color: #1681c4;
+}
+.tdc-reading-meta span {
+    white-space: nowrap;
+}
+@media screen and (max-width: 782px) {
+    .admin-bar .tdc-reading-progress {
+        top: 46px;
+    }
+}
+@media (max-width: 600px) {
+    .tdc-single-heading-content {
+        padding-right: 18px;
+    }
+    .tdc-reading-meta {
+        max-width: 100%;
+        font-size: 13px;
+    }
+}
+CSS;
+
+    wp_add_inline_style('group-c-style', $reading_progress_css);
+}
+add_action('wp_enqueue_scripts', 'root_theme_enqueue_reading_progress_styles', 30);
+
+function root_theme_render_reading_progress_script() {
+    if (!is_single()) {
+        return;
+    }
+    ?>
+    <script>
+    (function () {
+        'use strict';
+
+        var content = document.querySelector('.single-post-content');
+        var progressBar = document.querySelector('.tdc-reading-progress__bar');
+        var ticking = false;
+
+        if (!content || !progressBar) {
+            return;
+        }
+
+        function updateReadingProgress() {
+            var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            var contentTop = content.getBoundingClientRect().top + window.pageYOffset;
+            var contentHeight = content.offsetHeight;
+            var readableDistance = Math.max(contentHeight - viewportHeight, 1);
+            var currentDistance = window.pageYOffset - contentTop;
+            var percentage = Math.min(100, Math.max(0, (currentDistance / readableDistance) * 100));
+
+            progressBar.style.width = percentage.toFixed(2) + '%';
+            ticking = false;
+        }
+
+        function requestProgressUpdate() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateReadingProgress);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+        window.addEventListener('resize', requestProgressUpdate);
+        updateReadingProgress();
+    }());
+    </script>
+    <?php
+}
+add_action('wp_footer', 'root_theme_render_reading_progress_script', 30);
+
 
 // 2. Đăng ký khu vực Sidebar & Footer Widgets
 function root_theme_widgets_init() {
