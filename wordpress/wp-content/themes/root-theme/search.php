@@ -1,7 +1,7 @@
 <?php
 /**
  * Template for Search Page (Module 4: Search Form & Module 5: Search Results)
- * Theme: Root Theme
+ * Theme: Root Theme - Module 4: Search Form (Bootsnipp 35V6b)
  */
 get_header();
 ?>
