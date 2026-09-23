@@ -40,12 +40,74 @@
         </div>
     </section>
 
-    <!-- MODULE (10): 10 BÀI VIẾT MỚI NHẤT PHONG CÁCH FIT TDC -->
+    <!-- MODULE (10): RECENT POSTS -->
     <?php
-    if (file_exists(get_template_directory() . '/modules/module-10-recent-posts.php')) {
-        include get_template_directory() . '/modules/module-10-recent-posts.php';
-    }
+    $tdc_recent_posts = new WP_Query(array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => 3,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ));
     ?>
+
+    <section class="tdc-module-10">
+
+        <div class="tdc-module-10-header">
+            <span class="tdc-module-10-menu">&#8942;</span>
+        </div>
+
+        <?php if ($tdc_recent_posts->have_posts()) : ?>
+
+            <div class="tdc-module-10-list">
+
+                <?php while ($tdc_recent_posts->have_posts()) : $tdc_recent_posts->the_post(); ?>
+
+                    <article class="tdc-module-10-item">
+
+                        <div class="tdc-module-10-date">
+                            <span class="tdc-date-day">
+                                <?php echo esc_html(get_the_date('d')); ?>
+                            </span>
+
+                            <span class="tdc-date-month">
+                                <?php echo esc_html(get_the_date('m')); ?>
+                            </span>
+
+                            <span class="tdc-date-year">
+                                <?php echo esc_html(get_the_date('y')); ?>
+                            </span>
+                        </div>
+
+                        <div class="tdc-module-10-content">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php the_title(); ?>
+                            </a>
+                        </div>
+
+                    </article>
+
+                <?php endwhile; ?>
+
+            </div>
+
+        <?php else : ?>
+
+            <div class="tdc-module-10-empty">
+                Chưa có bài viết nào.
+            </div>
+
+        <?php endif; ?>
+
+        <div class="tdc-module-10-footer">
+            <a href="<?php echo esc_url(home_url('/')); ?>">
+                XEM TẤT CẢ TIN TỨC
+            </a>
+        </div>
+
+    </section>
+
+    <?php wp_reset_postdata(); ?>
 
     <!-- MODULE (11): ARCHIVE / XEM NHIỀU 2 CỘT PHONG CÁCH VNEXPRESS -->
     <?php

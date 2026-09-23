@@ -3761,137 +3761,157 @@ img {
 }
 
 
-/* ============================================================
-   MODULE 10 - RECENT POSTS WIDGET (tdc-fit-recent-box)
-   ============================================================ */
+/* =========================================================
+   MODULE 10 - RECENT NEWS
+   ========================================================= */
 
-.tdc-fit-recent-widget {
-    margin-bottom: 24px;
-}
-
-.tdc-fit-recent-box {
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
+   .tdc-module-10 {
+    position: relative;
+    width: 100%;
+    background: #55bcc1;
+    color: #ffffff;
     overflow: hidden;
+    border: 1px solid #35aeb5;
 }
 
-.tdc-fit-recent-header {
-    background: #1e293b;
-    color: #fff;
-    padding: 10px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+/* Header */
+.tdc-module-10-header {
+    position: relative;
+    height: 28px;
 }
 
-.tdc-fit-recent-list {
-    padding: 8px 0;
+.tdc-module-10-menu {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+    font-size: 23px;
+    line-height: 20px;
+    color: #333333;
+    cursor: pointer;
 }
 
-.tdc-fit-post-item {
+/* Danh sách bài viết */
+.tdc-module-10-list {
+    width: 100%;
+}
+
+/* Một bài viết */
+.tdc-module-10-item {
     display: flex;
     align-items: center;
-    padding: 8px 14px;
-    border-bottom: 1px solid #f1f5f9;
-    gap: 12px;
+    min-height: 48px;
+    padding: 4px 14px 4px 18px;
 }
 
-.tdc-fit-post-item:last-child {
-    border-bottom: none;
+/* Ngày */
+.tdc-module-10-date {
+    position: relative;
+    flex: 0 0 82px;
+    width: 82px;
+    height: 42px;
+
+    color: #ffffff;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
 }
 
-.tdc-fit-date-box {
-    flex-shrink: 0;
-    width: 48px;
-    text-align: center;
-    border-right: 1px solid #e2e8f0;
-    padding-right: 10px;
+/* Ngày */
+.tdc-date-day {
+    position: absolute;
+    top: 0;
+    left: 10px;
+
+    font-size: 15px;
+    line-height: 14px;
+    font-weight: 400;
 }
 
-.tdc-fit-date-top {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 2px;
+/* Thanh ngang giữa ngày và tháng */
+.tdc-module-10-date::after {
+    content: "";
+
+    position: absolute;
+    top: 13px;
+    left: 9px;
+
+    width: 15px;
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.9);
 }
 
-.tdc-fit-day {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1e293b;
-    font-family: Georgia, serif;
-    line-height: 1;
+/* Tháng */
+.tdc-date-month {
+    position: absolute;
+    top: 14px;
+    left: 10px;
+
+    font-size: 15px;
+    line-height: 14px;
+    font-weight: 400;
 }
 
-.tdc-fit-dash {
-    font-size: 11px;
-    color: #94a3b8;
+/* Hai số cuối của năm */
+.tdc-date-year {
+    position: absolute;
+    top: 13px;
+    left: 29px;
+    transform: translateY(-50%);
+
+    font-size: 15px;
+    line-height: 14px;
+    font-weight: 400;
 }
 
-.tdc-fit-year {
-    font-size: 11px;
-    font-weight: 600;
-    color: #64748b;
-}
-
-.tdc-fit-date-bottom {
-    margin-top: 2px;
-}
-
-.tdc-fit-month {
-    font-size: 11px;
-    font-weight: 600;
-    color: #94a3b8;
-    text-transform: uppercase;
-}
-
-.tdc-fit-title-wrap {
+/* Tiêu đề */
+.tdc-module-10-content {
     flex: 1;
     min-width: 0;
 }
 
-.tdc-fit-post-title {
-    font-size: 13px;
-    color: #334155;
-    text-decoration: none;
+.tdc-module-10-content a {
+    display: block;
+    color: #ffffff;
+    font-size: 14px;
     line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    transition: color 0.15s;
+    font-weight: 400;
+    text-decoration: none;
 }
 
-.tdc-fit-post-title:hover {
-    color: #1d4ed8;
+.tdc-module-10-content a:hover {
+    color: #ffffff;
     text-decoration: underline;
 }
 
-.tdc-fit-recent-footer {
-    padding: 10px 14px;
-    text-align: center;
-    border-top: 1px solid #f1f5f9;
-    background: #f8fafc;
+/* Footer */
+.tdc-module-10-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.08);
 }
 
-.tdc-fit-all-news-btn {
-    display: inline-block;
-    padding: 7px 18px;
-    background: #1e293b;
-    color: #fff;
-    font-size: 11px;
+.tdc-module-10-footer a {
+    color: #ffffff;
+    font-size: 14px;
     font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border-radius: 4px;
     text-decoration: none;
-    transition: background 0.2s;
 }
 
-.tdc-fit-all-news-btn:hover {
-    background: #0f172a;
+.tdc-module-10-footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Không có bài */
+.tdc-module-10-empty {
+    padding: 20px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
 }
 
 /* ============================================================
