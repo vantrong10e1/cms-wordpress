@@ -4503,3 +4503,196 @@ footer.site-footer,
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
 }
+/* =========================================
+   WIDGET TEST 4
+   ========================================= */
+
+.widget-test-4-area {
+    width: 100%;
+    max-width: 800px;
+    margin: 28px auto 32px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.widget-test-4-area .widget-test-4-widget {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+/* Danh sách */
+.widget-test-4 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Từng bài viết */
+.widget-test-4-item {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    margin: 0 0 8px;
+    padding: 0;
+    background: #f4f4f4;
+    box-sizing: border-box;
+}
+
+/* Link toàn bộ dòng */
+.widget-test-4-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 55px 0 20px;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* Tiêu đề */
+.widget-test-4-title {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #222;
+}
+
+/* Comment */
+.widget-test-4-comments {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1;
+    color: #1684c4;
+    white-space: nowrap;
+}
+
+/* Icon comment */
+.comment-icon {
+    position: relative;
+    display: inline-block;
+    width: 12px;
+    height: 9px;
+    margin-right: 4px;
+    background: #b7b7b7;
+    border-radius: 1px;
+}
+
+.comment-icon::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    bottom: -3px;
+    width: 0;
+    height: 0;
+    border-top: 4px solid #b7b7b7;
+    border-right: 4px solid transparent;
+}
+
+/* Chevron bên phải */
+.widget-test-4-arrow {
+    position: absolute;
+    top: 50%;
+    right: 23px;
+    width: 8px;
+    height: 8px;
+    border-right: 1px solid #34495e;
+    border-bottom: 1px solid #34495e;
+    transform: translateY(-65%) rotate(45deg);
+}
+
+/* Hover */
+.widget-test-4-link:hover {
+    background: #eeeeee;
+}
+
+.widget-test-4-link:hover .widget-test-4-title {
+    color: #1684c4;
+}
+
+/* Xem thêm - giống mẫu */
+.widget-test-4-more {
+    width: 100%;
+    margin-top: 8px;
+    padding: 0;
+    text-align: center;
+}
+
+.widget-test-4-more a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 40px;
+    padding: 0 15px;
+    box-sizing: border-box;
+
+    background: #e8edf5;
+    border: 1px solid #cbd5e3;
+    border-radius: 0;
+
+    color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+
+    text-align: center;
+    text-decoration: none;
+
+    transition: background 0.2s ease;
+}
+
+.widget-test-4-more a:hover {
+    background: #dfe6ef;
+    border-color: #c1ccd9;
+    color: #222;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .widget-test-4-area {
+        padding: 0 15px;
+        margin-top: 20px;
+    }
+
+    .widget-test-4-item {
+        height: auto;
+        min-height: 55px;
+    }
+
+    .widget-test-4-link {
+        min-height: 55px;
+        padding: 8px 45px 8px 15px;
+    }
+
+    .widget-test-4-title {
+        font-size: 16px;
+    }
+
+    .widget-test-4-comments {
+        font-size: 12px;
+    }
+
+    .widget-test-4-arrow {
+        right: 18px;
+    }
+}
