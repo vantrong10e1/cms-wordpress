@@ -278,9 +278,90 @@ function root_theme_widgets_init() {
         'before_title'  => '<h2 class="widget-title">',
         'after_title'   => '</h2>',
     ));
+    register_sidebar(array(
+        'name'          => 'Widget Test 4',
+        'id'            => 'widget_test_4',
+        'description'   => 'Widget hiển thị 5 bài viết mới nhất phía trên Footer',
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
 }
 add_action('widgets_init', 'root_theme_widgets_init');
 
+// 4. Widget Test 4 - 5 bài viết mới nhất
+class Root_Theme_Widget_Test_4 extends WP_Widget {
+
+    public function __construct() {
+        parent::__construct(
+            'root_theme_widget_test_4',
+            'Widget Test 4',
+            array(
+                'description' => 'Hiển thị 5 bài viết mới nhất.',
+            )
+        );
+    }
+
+    public function widget($args, $instance) {
+        $posts = new WP_Query(array(
+            'post_type'      => 'post',
+            'post_status'    => 'publish',
+            'posts_per_page' => 5,
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        ));
+
+        if (!$posts->have_posts()) {
+            return;
+        }
+
+        echo $args['before_widget'];
+        ?>
+
+        <div class="widget-test-4">
+            <?php while ($posts->have_posts()) : $posts->the_post(); ?>
+
+                <article class="widget-test-4-item">
+
+                    <a
+                        class="widget-test-4-link"
+                        href="<?php the_permalink(); ?>"
+                    >
+                        <span class="widget-test-4-title">
+                            <?php the_title(); ?>
+                        </span>
+
+                        <span class="widget-test-4-comments">
+                            <span class="comment-icon"></span>
+                            <?php echo get_comments_number(); ?>
+                        </span>
+
+                        <span class="widget-test-4-arrow"></span>
+                    </a>
+
+                </article>
+
+            <?php endwhile; ?>
+        </div>
+
+        <div class="widget-test-4-more">
+            <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>">
+                Xem thêm
+            </a>
+        </div>
+
+        <?php
+        echo $args['after_widget'];
+
+        wp_reset_postdata();
+    }
+}
+
+function root_theme_register_widget_test_4() {
+    register_widget('Root_Theme_Widget_Test_4');
+}
+add_action('widgets_init', 'root_theme_register_widget_test_4');
 
 // 3. Đăng ký các Shortcodes cho 4 Modules
 if (!shortcode_exists('tdc_categories')) {
