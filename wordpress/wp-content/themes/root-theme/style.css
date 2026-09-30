@@ -4513,13 +4513,14 @@ footer.site-footer,
     margin: 28px auto 32px;
     padding: 0;
     box-sizing: border-box;
+    background: #ffffff !important;
 }
 
 .widget-test-4-area .widget-test-4-widget {
     width: 100%;
     margin: 0;
     padding: 0;
-    background: transparent;
+    background: #ffffff !important; 
     border: 0;
 }
 
@@ -4695,7 +4696,7 @@ footer.site-footer,
     .widget-test-4-arrow {
         right: 18px;
     }
-=======
+}
 
 /* =========================================================
    MODULE 14 - LATEST NEWS
