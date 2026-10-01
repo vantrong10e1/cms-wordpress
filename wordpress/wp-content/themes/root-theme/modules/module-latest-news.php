@@ -35,8 +35,8 @@ if ($latest_news_query->have_posts()) :
 
     <div class="latest-news-container">
 
-        <h2 class="latest-news-title">
-            Latest News
+        <h2 class="latest-news-title" data-i18n="latest_news_title">
+            Tin mới nhất
         </h2>
 
         <div class="latest-news-timeline">

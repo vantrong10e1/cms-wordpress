@@ -29,7 +29,7 @@ $comments_count = count($comments_list);
     <!-- FORM MAKE A POST (BOOTSNIPP) -->
     <div class="tdc-make-post-card-wrapper">
         <div class="tdc-make-a-post-card">
-            <div class="tdc-make-a-post-tab">Make a Post</div>
+            <div class="tdc-make-a-post-tab" data-i18n="make_a_post">Viết bình luận</div>
 
             <?php if (comments_open()) : ?>
             <form action="<?php echo esc_url(site_url('/wp-comments-post.php')); ?>" method="post" id="commentform" class="tdc-make-post-form">
@@ -42,7 +42,8 @@ $comments_count = count($comments_list);
                         id="comment"
                         name="comment"
                         class="tdc-make-a-post-textarea"
-                        placeholder="What are you thinking..."
+                        placeholder="Bạn đang nghĩ gì..."
+                        data-i18n-placeholder="comment_placeholder"
                         required="required"
                         rows="4"
                     ></textarea>
@@ -50,27 +51,27 @@ $comments_count = count($comments_list);
 
                 <?php if (!is_user_logged_in()) : ?>
                     <div class="tdc-comment-guest-fields">
-                        <input type="text" name="author" id="author" placeholder="Họ và tên *" required="required" class="tdc-guest-input">
-                        <input type="email" name="email" id="email" placeholder="Email *" required="required" class="tdc-guest-input">
-                        <input type="url" name="url" id="url" placeholder="Website (tùy chọn)" class="tdc-guest-input">
+                        <input type="text" name="author" id="author" placeholder="Họ và tên *" data-i18n-placeholder="author_placeholder" required="required" class="tdc-guest-input">
+                        <input type="email" name="email" id="email" placeholder="Email *" data-i18n-placeholder="email_placeholder" required="required" class="tdc-guest-input">
+                        <input type="url" name="url" id="url" placeholder="Website (tùy chọn)" data-i18n-placeholder="url_placeholder" class="tdc-guest-input">
                     </div>
                 <?php else : ?>
                     <div class="tdc-logged-in-info">
                         <?php
                         $current_user = wp_get_current_user();
-                        echo '<p>Đăng nhập với tư cách <strong>' . esc_html($current_user->display_name) . '</strong>. ';
-                        echo '<a href="' . esc_url(wp_logout_url(get_permalink())) . '">Đăng xuất?</a></p>';
+                        echo '<p><span data-i18n="logged_in_as">Đăng nhập với tư cách</span> <strong>' . esc_html($current_user->display_name) . '</strong>. ';
+                        echo '<a href="' . esc_url(wp_logout_url(get_permalink())) . '" data-i18n="logout">Đăng xuất?</a></p>';
                         ?>
                     </div>
                 <?php endif; ?>
 
                 <div class="tdc-make-a-post-footer">
-                    <button name="submit" type="submit" id="submit" class="tdc-make-post-share-btn">share</button>
+                    <button name="submit" type="submit" id="submit" class="tdc-make-post-share-btn" data-i18n="share_btn">Chia sẻ</button>
                 </div>
 
             </form>
             <?php else : ?>
-                <p class="tdc-comments-closed">Bình luận đã được đóng cho bài viết này.</p>
+                <p class="tdc-comments-closed" data-i18n="comments_closed">Bình luận đã được đóng cho bài viết này.</p>
             <?php endif; ?>
         </div>
     </div>
@@ -79,7 +80,7 @@ $comments_count = count($comments_list);
     <?php if ($comments_count > 0) : ?>
         <div class="existing-comments tdc-existing-comments">
             <h3 class="comments-title">
-                <?php echo esc_html($comments_count) . ' Bình luận'; ?>
+                <span><?php echo esc_html($comments_count); ?></span> <span data-i18n="comments">Bình luận</span>
             </h3>
 
             <ol class="comment-list">
@@ -90,7 +91,7 @@ $comments_count = count($comments_list);
                                 <div class="comment-author vcard">
                                     <?php echo get_avatar($cmt->comment_author_email, 48); ?>
                                     <b class="fn"><?php echo esc_html($cmt->comment_author); ?></b>
-                                    <span class="says">viết:</span>
+                                    <span class="says" data-i18n="comment_says">viết:</span>
                                 </div>
                                 <div class="comment-metadata">
                                     <a href="<?php echo esc_url(get_comment_link($cmt->comment_ID)); ?>">

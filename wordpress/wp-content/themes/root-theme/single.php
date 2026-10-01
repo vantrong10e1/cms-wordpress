@@ -30,7 +30,7 @@
                                 <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"></circle>
                                 <path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            <span>Đã đọc được <?php echo esc_html($reading_time); ?> phút</span>
+                            <span class="tdc-reading-meta-text"><span data-i18n="reading_time_prefix">Đã đọc được </span><?php echo esc_html($reading_time); ?><span data-i18n="reading_time_suffix"> phút</span></span>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@
                      SOURCE
                 ====================================== -->
 
-                <div class="single-post-source">
+                <div class="single-post-source" data-i18n="source_prefix">
 
                     (Theo Người Lao Động)
 

@@ -17,7 +17,7 @@ $module_13_posts = $wpdb->get_results("
     <?php if (!empty($module_13_posts)) : ?>
         <!-- MODULE 13: 3 bài viết trên một hàng, responsive thành 1 cột -->
         <section class="tdc-module-13" aria-labelledby="tdc-module-13-title">
-            <h2 id="tdc-module-13-title" class="tdc-module-13__heading">Pages</h2>
+            <h2 id="tdc-module-13-title" class="tdc-module-13__heading" data-i18n="pages">Pages</h2>
 
             <div class="tdc-module-13__grid">
                 <?php foreach ($module_13_posts as $module_13_index => $module_13_post) :
@@ -66,7 +66,7 @@ $module_13_posts = $wpdb->get_results("
         <section class="home-content">
 
             <div class="section-heading">
-                <h1>Latest Posts</h1>
+                <h1 data-i18n="latest_posts">Bài viết mới nhất</h1>
             </div>
 
             <?php if (have_posts()) : ?>
@@ -80,7 +80,7 @@ $module_13_posts = $wpdb->get_results("
                             <!-- DATE (Module 2 FIT TDC) -->
                             <div class="news-date tdc-post-date-col">
                                 <span class="date-day"><?php echo esc_html(get_the_date('d')); ?></span>
-                                <span class="date-month">THÁNG <?php echo esc_html(get_the_date('m')); ?></span>
+                                <span class="date-month" data-month="<?php echo esc_html(get_the_date('m')); ?>">THÁNG <?php echo esc_html(get_the_date('m')); ?></span>
                             </div>
 
                             <!-- CONTENT (Module 2 FIT TDC) -->
@@ -93,7 +93,7 @@ $module_13_posts = $wpdb->get_results("
 
                                 <p class="tdc-post-card-excerpt">
                                     <?php
-                                    echo esc_html(
+                                     echo esc_html(
                                         wp_trim_words(
                                             get_the_excerpt(),
                                             30,
@@ -121,8 +121,8 @@ $module_13_posts = $wpdb->get_results("
                     the_posts_pagination(
                         array(
                             'mid_size'  => 2,
-                            'prev_text' => '« Previous',
-                            'next_text' => 'Next »',
+                            'prev_text' => '<span data-i18n="prev_page">« Trước</span>',
+                            'next_text' => '<span data-i18n="next_page">Tiếp »</span>',
                         )
                     );
                     ?>
@@ -134,10 +134,10 @@ $module_13_posts = $wpdb->get_results("
 
                 <div class="no-posts">
 
-                    <h2>No posts found.</h2>
+                    <h2 data-i18n="no_posts_title">Không tìm thấy bài viết.</h2>
 
-                    <p>
-                        There are currently no posts to display.
+                    <p data-i18n="no_posts_desc">
+                        Hiện tại chưa có bài viết nào để hiển thị.
                     </p>
 
                 </div>

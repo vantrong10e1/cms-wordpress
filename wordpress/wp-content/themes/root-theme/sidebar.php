@@ -21,7 +21,7 @@
     ?>
     <section class="widget tdc-fit-categories-widget">
         <div class="tdc-fit-categories-box">
-            <h3 class="tdc-fit-categories-title">Categories</h3>
+            <h3 class="tdc-fit-categories-title" data-i18n="categories">Chuyên mục</h3>
             <div class="tdc-fit-title-stripe"></div>
             <ul class="tdc-fit-categories-list">
                 <?php if (!empty($tdc_categories)) : ?>
@@ -34,7 +34,7 @@
                         </li>
                     <?php endforeach; ?>
                 <?php else : ?>
-                    <li>Chưa có chuyên mục nào</li>
+                    <li data-i18n="no_categories">Chưa có chuyên mục nào</li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -93,14 +93,14 @@
 
         <?php else : ?>
 
-            <div class="tdc-module-10-empty">
+            <div class="tdc-module-10-empty" data-i18n="no_posts">
                 Chưa có bài viết nào.
             </div>
 
         <?php endif; ?>
 
         <div class="tdc-module-10-footer">
-            <a href="<?php echo esc_url(home_url('/')); ?>">
+            <a href="<?php echo esc_url(home_url('/')); ?>" data-i18n="view_all_news">
                 XEM TẤT CẢ TIN TỨC
             </a>
         </div>
@@ -123,7 +123,7 @@
     <section class="tdc-module-11">
 
         <div class="tdc-module-11-header">
-            <h3 class="tdc-module-11-title">Xem nhiều</h3>
+            <h3 class="tdc-module-11-title" data-i18n="most_viewed">Xem nhiều</h3>
             <span class="tdc-module-11-menu">&#8942;</span>
         </div>
 
@@ -161,7 +161,7 @@
 
         <?php else : ?>
 
-            <div class="tdc-module-11-empty">
+            <div class="tdc-module-11-empty" data-i18n="no_posts">
                 Chưa có bài viết nào.
             </div>
 
@@ -187,7 +187,7 @@
     <section class="widget tdc-module-12">
 
         <div class="tdc-module-12-header">
-            <h3 class="tdc-module-12-title">Comments</h3>
+            <h3 class="tdc-module-12-title" data-i18n="comments">Bình luận</h3>
             <div class="tdc-module-12-stripe"></div>
         </div>
 
@@ -222,7 +222,7 @@
 
         <?php else : ?>
 
-            <div class="tdc-module-12-empty">
+            <div class="tdc-module-12-empty" data-i18n="no_posts">
                 Chưa có bình luận nào.
             </div>
 

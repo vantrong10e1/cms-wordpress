@@ -13,7 +13,7 @@ get_header();
         <!-- MODULE (5) - SEARCH RESULTS -->
         <section class="search-result-header tdc-has-results-header">
             <h1 class="tdc-search-title">
-                Search: <span>"<?php echo esc_html(get_search_query()); ?>"</span>
+                <span data-i18n="search_results_title">Kết quả tìm kiếm cho: </span><span>"<?php echo esc_html(get_search_query()); ?>"</span>
             </h1>
         </section>
 
@@ -47,7 +47,7 @@ get_header();
                         <div class="result-day tdc-search-day">
                             <?php echo esc_html($post_date); ?>
                         </div>
-                        <div class="result-month tdc-search-month">
+                        <div class="result-month tdc-search-month" data-month="<?php echo esc_html($post_month); ?>">
                             THÁNG <?php echo esc_html($post_month); ?>
                         </div>
                     </div>
@@ -79,8 +79,8 @@ get_header();
                 <?php
                 the_posts_pagination(array(
                     'mid_size'  => 2,
-                    'prev_text' => '« Previous',
-                    'next_text' => 'Next »',
+                    'prev_text' => '<span data-i18n="prev_page">« Trước</span>',
+                    'next_text' => '<span data-i18n="next_page">Tiếp »</span>',
                 ));
                 ?>
             </div>
@@ -94,10 +94,10 @@ get_header();
             
             <div class="tdc-search-not-found-header">
                 <h1 class="tdc-search-keyword-highlight">
-                    Search: <span>"<?php echo esc_html(get_search_query()); ?>"</span>
+                    <span data-i18n="search_results_title">Kết quả tìm kiếm cho: </span><span>"<?php echo esc_html(get_search_query()); ?>"</span>
                 </h1>
-                <p class="tdc-search-not-found-msg">
-                    We could not find any results for your search. You can give it another try through the search form below.
+                <p class="tdc-search-not-found-msg" data-i18n="search_not_found">
+                    Không tìm thấy kết quả nào phù hợp.
                 </p>
             </div>
 
