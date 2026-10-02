@@ -205,3 +205,22 @@ if (!shortcode_exists('tdc_sports_fixtures')) {
         return ob_get_clean();
     });
 }
+
+// 5. Module 14 - Featured Visuals
+
+if (!shortcode_exists('tdc_featured_module_14')) {
+    add_shortcode('tdc_featured_module_14', function () {
+
+        ob_start();
+
+        $module_14_file = get_template_directory()
+            . '/modules/module-14-featured.php';
+
+        if (file_exists($module_14_file)) {
+            include $module_14_file;
+        }
+
+        return ob_get_clean();
+    });
+}
+
